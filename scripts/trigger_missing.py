@@ -26,6 +26,8 @@ def parse_options():
            default=['i386','amd64'])
     parser.add_argument('--sourcedeb-only', action='store_true', default=False,
            help='Only check sourcedeb jobs. Default: all')
+    parser.add_argument('--rosdistro', dest='rosdist_rep', default='https://raw.github.com/ros/rosdistro/master/',
+            help='The base path to a rosdistro repository. Default: %(default)s')
     parser.add_argument('--commit', dest='commit',
            help='Really?', action='store_true')
     return parser.parse_args()
@@ -72,7 +74,8 @@ if __name__ == '__main__':
         args.arches,
         args.fqdn,
         rosdistro=args.rosdistro,
-        sourcedeb_only=args.sourcedeb_only)
+        sourcedeb_only=args.sourcedeb_only,
+        rosdist_rep=args.rosdist_rep)
 
     pp = pprint.PrettyPrinter()
     print ("net Missing")
