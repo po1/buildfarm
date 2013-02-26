@@ -96,14 +96,14 @@ class Rosdistro:
         packages = {}
         for repo, info  in self._repoinfo.iteritems():
             for p, path in info.packages.iteritems():
-                if info.version == None: 
+                if info.version == None:
                     print ("Skipping repo %s due to null version" % p)
                     continue
-                packages[p] = {'url': info.url, 
-                               'version': 'release/%s/%s' % (p, info.version), 
+                packages[p] = {'url': info.url,
+                               'version': 'release/%s/%s/%s' % (p, self._rosdistro, info.version),
                                'relative_path': path}
         return packages
-                
+
     def get_version(self, package_name, full_version = False):
         if package_name in self._package_in_repo:
             if full_version:
@@ -136,7 +136,7 @@ class Rosdistro:
         if not distro:
             distro = self.get_default_target()
         raise NotImplemented
-            
+
 
     def compute_rosinstall_snippet(self, local_name, gbp_url, version, distro_name):
 
@@ -156,7 +156,7 @@ class Rosdistro:
     def compute_rosinstall_distro(self, rosdistro, distro_name):
         rosinstall_data = [self.compute_rosinstall_snippet(name, r['url'], r['version'], rosdistro) for name, r in self.repo_map['repositories'].items() if 'url' in r and 'version' in r]
         return rosinstall_data
-        
+
 
 
 def get_target_distros(rosdistro):
